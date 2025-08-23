@@ -1,2 +1,2 @@
-# small_mlfow_pipeline
+# Small mlfow pipeline
 Small pet-project for mlflow
