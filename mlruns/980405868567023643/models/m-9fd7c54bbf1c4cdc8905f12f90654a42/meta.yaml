@@ -1,0 +1,10 @@
+artifact_location: file:///mnt/d/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/career_courses_postupashky_start/ML/%D0%94%D0%97/%D0%A5%D0%B0%D1%80%D0%B4/small_mlflow_pipeline/mlruns/980405868567023643/models/m-9fd7c54bbf1c4cdc8905f12f90654a42/artifacts
+creation_timestamp: 1756049702420
+experiment_id: '980405868567023643'
+last_updated_timestamp: 1756049728590
+model_id: m-9fd7c54bbf1c4cdc8905f12f90654a42
+model_type: null
+name: logreg_model
+source_run_id: 610ca00d54c54fa2948a67edd966252e
+status: 2
+status_message: null
