@@ -1,5 +1,7 @@
+dvc
 mlflow
 pandas
+numpy
 scikit-learn
-dvc
+lightgbm
 apache-airflow

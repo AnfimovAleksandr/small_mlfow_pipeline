@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/d/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/career_courses_postupashky_start/ML/%D0%94%D0%97/%D0%A5%D0%B0%D1%80%D0%B4/small_mlflow_pipeline/mlruns/980405868567023643/76a8d8619d9c47a2bf4a980355209723/artifacts
+deleted_time: 1756037137504
+end_time: 1756034737960
+entry_point_name: ''
+experiment_id: '980405868567023643'
+lifecycle_stage: deleted
+run_id: 76a8d8619d9c47a2bf4a980355209723
+run_name: smiling-crab-606
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1756034737758
+status: 4
+tags: []
+user_id: greytune

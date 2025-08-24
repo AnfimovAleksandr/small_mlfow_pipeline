@@ -1,0 +1,22 @@
+artifact_path: file:///mnt/d/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/career_courses_postupashky_start/ML/%D0%94%D0%97/%D0%A5%D0%B0%D1%80%D0%B4/small_mlflow_pipeline/mlruns/980405868567023643/models/m-44179714fa3b40ec89d95ae23ab1b375/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.7.1
+mlflow_version: 3.3.1
+model_id: m-44179714fa3b40ec89d95ae23ab1b375
+model_size_bytes: 1714
+model_uuid: m-44179714fa3b40ec89d95ae23ab1b375
+prompts: null
+run_id: eace277f8f4e4cb087c338cdafb30364
+utc_time_created: '2025-08-24 11:37:41.610037'
