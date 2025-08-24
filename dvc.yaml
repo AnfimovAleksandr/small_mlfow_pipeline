@@ -1,27 +1,27 @@
 stages:
   data_load:
-    cmd: python data_loader.py
+    cmd: python scripts/data_loader.py
     deps:
-      - raw_train.csv
-      - data_loader.py
+      - data/raw_train.csv
+      - scripts/data_loader.py
     outs:
-      - train.csv
-      - test.csv
+      - data/train.csv
+      - data/test.csv
 
   train_logreg:
-    cmd: python train_logreg_model.py
+    cmd: python scripts/train_logreg_model.py
     deps:
-      - train_logreg_model.py
-      - train.csv
-      - test.csv
+      - scripts/train_logreg_model.py
+      - data/train.csv
+      - data/test.csv
     outs:
       - models/logreg_model.pkl
 
   train_lgmb_model:
-    cmd: python train_lgmb_model.py
+    cmd: python scripts/train_lgbm_model.py
     deps:
-      - train_lgmb_model.py
-      - train.csv
-      - test.csv
+      - scripts/train_lgbm_model.py
+      - data/train.csv
+      - data/test.csv
     outs:
-      - models/lgmb_model.pkl
+      - models/lgbm_model.pkl

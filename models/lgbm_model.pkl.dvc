@@ -1,6 +1,0 @@
-outs:
-- md5: 254b55d647d47279770b68eecd879d4c
-  size: 462471
-  isexec: true
-  hash: md5
-  path: lgbm_model.pkl

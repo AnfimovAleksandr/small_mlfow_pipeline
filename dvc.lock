@@ -1,0 +1,74 @@
+schema: '2.0'
+stages:
+  data_load:
+    cmd: python scripts/data_loader.py
+    deps:
+    - path: data/raw_train.csv
+      hash: md5
+      md5: 3710f58494ce32f43e65755cc3f846b3
+      size: 36791207
+      isexec: true
+    - path: scripts/data_loader.py
+      hash: md5
+      md5: 47e684abb7a63d36f705060db4f7cc29
+      size: 7990
+      isexec: true
+    outs:
+    - path: data/test.csv
+      hash: md5
+      md5: 3f47826791d71a615a5fd92693926eba
+      size: 6377178
+      isexec: true
+    - path: data/train.csv
+      hash: md5
+      md5: 5f64aa6cfb7b09043193987c43c32bc0
+      size: 25513303
+      isexec: true
+  train_logreg:
+    cmd: python scripts/train_logreg_model.py
+    deps:
+    - path: data/test.csv
+      hash: md5
+      md5: 3f47826791d71a615a5fd92693926eba
+      size: 6377178
+      isexec: true
+    - path: data/train.csv
+      hash: md5
+      md5: 5f64aa6cfb7b09043193987c43c32bc0
+      size: 25513303
+      isexec: true
+    - path: scripts/train_logreg_model.py
+      hash: md5
+      md5: fe1fd392d4c87556b2f1802a87ca5d9b
+      size: 4042
+      isexec: true
+    outs:
+    - path: models/logreg_model.pkl
+      hash: md5
+      md5: 712bfa6dd9b3da0a6f7da79a0dc5a272
+      size: 1714
+      isexec: true
+  train_lgmb_model:
+    cmd: python scripts/train_lgbm_model.py
+    deps:
+    - path: data/test.csv
+      hash: md5
+      md5: 3f47826791d71a615a5fd92693926eba
+      size: 6377178
+      isexec: true
+    - path: data/train.csv
+      hash: md5
+      md5: 5f64aa6cfb7b09043193987c43c32bc0
+      size: 25513303
+      isexec: true
+    - path: scripts/train_lgbm_model.py
+      hash: md5
+      md5: cba80ebdee5bad8945d6b180ea3d90ff
+      size: 3863
+      isexec: true
+    outs:
+    - path: models/lgbm_model.pkl
+      hash: md5
+      md5: 0676b8739843c898eb9c8d22abf289ae
+      size: 462480
+      isexec: true
