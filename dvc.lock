@@ -69,6 +69,6 @@ stages:
     outs:
     - path: models/lgbm_model.pkl
       hash: md5
-      md5: 0676b8739843c898eb9c8d22abf289ae
-      size: 462480
+      md5: 3f5f61abeeb2057f0d84581204ba49c8
+      size: 462482
       isexec: true

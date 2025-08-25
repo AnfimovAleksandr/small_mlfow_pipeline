@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/d/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/career_courses_postupashky_start/ML/%D0%94%D0%97/%D0%A5%D0%B0%D1%80%D0%B4/small_mlflow_pipeline/mlruns/980405868567023643/67a2f835320b40b09085c79e186ba715/artifacts
+deleted_time: 1756126888159
+end_time: 1756126746066
+entry_point_name: ''
+experiment_id: '980405868567023643'
+lifecycle_stage: deleted
+run_id: 67a2f835320b40b09085c79e186ba715
+run_name: LGBM_optimal
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1756126715363
+status: 3
+tags: []
+user_id: greytune

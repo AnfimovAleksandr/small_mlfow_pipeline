@@ -1,0 +1,10 @@
+artifact_location: file:///mnt/d/%D0%9E%D0%B1%D1%80%D0%B0%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/career_courses_postupashky_start/ML/%D0%94%D0%97/%D0%A5%D0%B0%D1%80%D0%B4/small_mlflow_pipeline/mlruns/980405868567023643/models/m-98b9a9af6ccc4b12acbf83ad15c9a855/artifacts
+creation_timestamp: 1756126719240
+experiment_id: '980405868567023643'
+last_updated_timestamp: 1756126745968
+model_id: m-98b9a9af6ccc4b12acbf83ad15c9a855
+model_type: null
+name: lgbm_model
+source_run_id: 67a2f835320b40b09085c79e186ba715
+status: 2
+status_message: null
