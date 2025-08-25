@@ -10,8 +10,8 @@ stages:
       isexec: true
     - path: scripts/data_loader.py
       hash: md5
-      md5: 47e684abb7a63d36f705060db4f7cc29
-      size: 7990
+      md5: 9e7b9c559cf3e0606328ed0daa51ea2f
+      size: 8646
       isexec: true
     outs:
     - path: data/test.csv
