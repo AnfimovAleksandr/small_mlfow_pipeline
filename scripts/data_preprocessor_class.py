@@ -7,7 +7,6 @@ import country_converter as coco
 class KickstarterPreprocessor:
     def __init__(self):
         self.scalers = {}
-        self.cc = coco.CountryConverter()
 
     def preprocess_raw_before_scaling(self, data):
         """Предобработка данных + feature engineering"""
@@ -55,8 +54,9 @@ class KickstarterPreprocessor:
         data['disable_communication'] = data['disable_communication'].astype(int)
 
         # Конвертируем коды стран в регионы
+        cc = coco.CountryConverter()
         data["region"] = data["country"].apply(
-            lambda x: self.cc.convert(names=x, to="continent", not_found="Other")
+            lambda x: cc.convert(names=x, to="continent", not_found="Other")
         )
         # OHE
         data = pd.get_dummies(

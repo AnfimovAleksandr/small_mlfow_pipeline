@@ -35,6 +35,9 @@ def main():
     X_train = preprocessor.transform(X_train)
     X_test = preprocessor.transform(X_test)
 
+    # Сохраняем предобработчик
+    preprocessor.save("models/preprocessor.pkl")    
+
     pd.concat([X_train, pd.DataFrame(y_train)], axis=1).to_csv('data/train.csv', index=False)
     pd.concat([X_test, pd.DataFrame(y_test)], axis=1).to_csv('data/test.csv', index=False)
 

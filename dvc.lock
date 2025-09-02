@@ -10,13 +10,13 @@ stages:
       isexec: true
     - path: scripts/data_loader.py
       hash: md5
-      md5: 065351ac6e57a4d23936a348b9f01edf
-      size: 1567
+      md5: a9b4f65a62f2ff47aa08b77b54c0e53b
+      size: 1675
       isexec: true
     - path: scripts/data_preprocessor_class.py
       hash: md5
-      md5: 6f64e9da70c34a2c79960abfe76d04d1
-      size: 7642
+      md5: fe5412238c02e5511105ff78b6f4dae8
+      size: 7632
       isexec: true
     outs:
     - path: data/test.csv
@@ -28,6 +28,11 @@ stages:
       hash: md5
       md5: 96aa3278e2aa3e6ada4461aa5b35eeba
       size: 25507258
+      isexec: true
+    - path: models/preprocessor.pkl
+      hash: md5
+      md5: 16b63e06874075c194ba8400bc103499
+      size: 3147
       isexec: true
   train_logreg:
     cmd: python scripts/train_logreg_model.py

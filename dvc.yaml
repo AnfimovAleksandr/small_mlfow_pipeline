@@ -8,6 +8,7 @@ stages:
     outs:
       - data/train.csv
       - data/test.csv
+      - models/preprocessor.pkl
 
   train_logreg:
     cmd: python scripts/train_logreg_model.py
