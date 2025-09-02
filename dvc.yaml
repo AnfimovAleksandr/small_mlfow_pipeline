@@ -3,6 +3,7 @@ stages:
     cmd: python scripts/data_loader.py
     deps:
       - data/raw_train.csv
+      - scripts/data_preprocessor_class.py
       - scripts/data_loader.py
     outs:
       - data/train.csv

@@ -1,2 +1,1 @@
-lgbm_model.pkl
-logreg_model.pkl
+*.pkl

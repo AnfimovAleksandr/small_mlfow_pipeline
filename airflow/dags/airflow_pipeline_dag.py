@@ -1,13 +1,25 @@
 from airflow.decorators import dag, task
-from datetime import datetime
+from datetime import datetime, timedelta
+
+
+deafult_args = {
+    'owner': 'anfimov_aleksandr',
+    'depends_on_past': False,
+    'start_date': datetime(2000, 1, 1),
+    'email_on_failure': False,
+    'email_on_retry': False,
+    'retries': 0,
+    'retry_delay': timedelta(minutes = 5)
+}
 
 # Определяем DAG
 @dag(
     dag_id="manual_testing_run",
-    description="DAG для ручного тестирования",
-    start_date=datetime(2025, 1, 1),  
+    deafult_args = deafult_args,
+    description="DAG для ручного тестирования", 
     schedule=None,          
-    catchup=False
+    catchup=False,
+    tags=['ml', 'dvc']
 )
 
 def ml_pipeline():

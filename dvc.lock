@@ -10,32 +10,37 @@ stages:
       isexec: true
     - path: scripts/data_loader.py
       hash: md5
-      md5: 9e7b9c559cf3e0606328ed0daa51ea2f
-      size: 8646
+      md5: 065351ac6e57a4d23936a348b9f01edf
+      size: 1567
+      isexec: true
+    - path: scripts/data_preprocessor_class.py
+      hash: md5
+      md5: 6f64e9da70c34a2c79960abfe76d04d1
+      size: 7642
       isexec: true
     outs:
     - path: data/test.csv
       hash: md5
-      md5: 3f47826791d71a615a5fd92693926eba
-      size: 6377178
+      md5: b3f16512c9a3012278967d3cc656fc1b
+      size: 6377119
       isexec: true
     - path: data/train.csv
       hash: md5
-      md5: 5f64aa6cfb7b09043193987c43c32bc0
-      size: 25513303
+      md5: 96aa3278e2aa3e6ada4461aa5b35eeba
+      size: 25507258
       isexec: true
   train_logreg:
     cmd: python scripts/train_logreg_model.py
     deps:
     - path: data/test.csv
       hash: md5
-      md5: 3f47826791d71a615a5fd92693926eba
-      size: 6377178
+      md5: b3f16512c9a3012278967d3cc656fc1b
+      size: 6377119
       isexec: true
     - path: data/train.csv
       hash: md5
-      md5: 5f64aa6cfb7b09043193987c43c32bc0
-      size: 25513303
+      md5: 96aa3278e2aa3e6ada4461aa5b35eeba
+      size: 25507258
       isexec: true
     - path: scripts/train_logreg_model.py
       hash: md5
@@ -45,7 +50,7 @@ stages:
     outs:
     - path: models/logreg_model.pkl
       hash: md5
-      md5: 712bfa6dd9b3da0a6f7da79a0dc5a272
+      md5: 3e5c196f2d4da1495fb5e2a65bcddd7a
       size: 1714
       isexec: true
   train_lgmb_model:
@@ -53,13 +58,13 @@ stages:
     deps:
     - path: data/test.csv
       hash: md5
-      md5: 3f47826791d71a615a5fd92693926eba
-      size: 6377178
+      md5: b3f16512c9a3012278967d3cc656fc1b
+      size: 6377119
       isexec: true
     - path: data/train.csv
       hash: md5
-      md5: 5f64aa6cfb7b09043193987c43c32bc0
-      size: 25513303
+      md5: 96aa3278e2aa3e6ada4461aa5b35eeba
+      size: 25507258
       isexec: true
     - path: scripts/train_lgbm_model.py
       hash: md5
@@ -69,6 +74,6 @@ stages:
     outs:
     - path: models/lgbm_model.pkl
       hash: md5
-      md5: 3f5f61abeeb2057f0d84581204ba49c8
-      size: 462482
+      md5: 1d330348e65fd172adbb8e135bc64f00
+      size: 464218
       isexec: true

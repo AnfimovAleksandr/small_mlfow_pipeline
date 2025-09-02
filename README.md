@@ -14,6 +14,7 @@
 ## Инструкции по запуску проекта
 1) Установить нужные библиотеки из requirements.txt.
 2) Установить нужный софт для LightGBM, прописав команду (Ubuntu / Debian / WSL с Ubuntu) `sudo apt install -y libgomp1`
+3) Если ещё не инициализированы git и dvc - `git init` и `dvc init`
 
 ## Команды для воспроизведения экспериментов
 1) Через DVC: `dvc repro --force`
