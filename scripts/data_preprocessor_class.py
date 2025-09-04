@@ -8,9 +8,10 @@ class KickstarterPreprocessor:
     def __init__(self):
         self.scalers = {}
 
-    def preprocess_raw_before_scaling(self, data):
+    def preprocess_raw_before_scaling(self, data, testing = False):
         """Предобработка данных + feature engineering"""
 
+        data = data.copy()
         data.drop(['keywords', 'project_id'], axis=1, inplace=True)
         data.dropna(inplace=True)
 
@@ -69,7 +70,7 @@ class KickstarterPreprocessor:
         data.drop(['country'], axis=1, inplace=True)
 
         # currency
-        main_currencies = set(['USD', 'GBP', 'EUR', 'CAD'])
+        main_currencies = set(['USD', 'GBP', 'EUR'])
         data['currency'] = data['currency'].apply(lambda x: x if x in main_currencies else 'Other')
         data = pd.get_dummies(
             data,
@@ -108,7 +109,10 @@ class KickstarterPreprocessor:
             prefix="campaign_duration",        
             prefix_sep="_"       
         )
-        data.drop(['campaign_duration_Normal', 'campaign_duration'], axis=1, inplace=True)
+        try:
+            data.drop(['campaign_duration_Normal', 'campaign_duration'], axis=1, inplace=True)
+        except Exception:
+            data.drop(['campaign_duration'], axis=1, inplace=True)
 
         #------------------------------------- ПРОСТЫЕ ТЕКСТОВЫЕ ------------------------------------------- 
 
@@ -135,7 +139,29 @@ class KickstarterPreprocessor:
         # В данном минипроекте используем только модели без текста
         data.drop(['name', 'desc'], axis=1, inplace=True)
 
-        return data
+        # Добавление столбцов на случай одиночных predict и переставление столбцов в нужном порядке
+        column_order = ['goal','disable_communication','backers_count','year_trend','month_launched_2','month_launched_3','month_launched_4','month_launched_5','month_launched_6','month_launched_7','month_launched_8','month_launched_9','month_launched_10','month_launched_11','month_launched_12','day_sin','day_cos','is_weekend','created_dif','region_Europe','region_Oceania','currency_EUR','currency_GBP','currency_Other','currency_USD','campaign_duration_Long','campaign_duration_Short','campaign_duration_Two_month','campaign_duration_Very_Short','campaign_duration_Very_long','words_name','words_desc','uppercase_ratio','exlam_and_quest', 'final_status']
+        for column_name in column_order:
+            if column_name not in data.columns:
+                data[column_name] = 0
+
+        # Перевод int в bool, чтобы модель нормально сохранялась и воспроизводилась из Model Registry
+        ohe_columns = [
+            'month_launched_2', 'month_launched_3', 'month_launched_4', 'month_launched_5',
+            'month_launched_6', 'month_launched_7', 'month_launched_8', 'month_launched_9',
+            'month_launched_10', 'month_launched_11', 'month_launched_12', 'is_weekend',
+            'region_Europe', 'region_Oceania',
+            'currency_EUR', 'currency_GBP', 'currency_Other', 'currency_USD',
+            'campaign_duration_Long', 'campaign_duration_Short', 
+            'campaign_duration_Two_month', 'campaign_duration_Very_Short', 'campaign_duration_Very_long'
+        ]
+        
+        for col in ohe_columns:
+            data[col] = data[col].astype(bool)
+
+        data = data[column_order]
+
+        return data.drop(['final_status'], axis= 1) if testing else data
 
     def fit(self, X_train):
         """Обучает преобразователи на предобработанных обучающих данных"""
@@ -159,7 +185,7 @@ class KickstarterPreprocessor:
         return self
     
     def transform(self, X):
-        """Применяет преобразования к данным"""
+        """Применяет скалирование к предобработанным данным"""
 
         X['goal'] =  self.scalers['goal'].transform(X[["goal"]])
         X['backers_count'] =  self.scalers['backers_count'].transform(X[["backers_count"]])

@@ -1,12 +1,5 @@
 import pandas as pd
-import numpy as np
-import re
-import string
-
-import country_converter as coco
-
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, RobustScaler
 
 from data_preprocessor_class import KickstarterPreprocessor
 
@@ -36,7 +29,7 @@ def main():
     X_test = preprocessor.transform(X_test)
 
     # Сохраняем предобработчик
-    preprocessor.save("models/preprocessor.pkl")    
+    preprocessor.save("models/preprocessor.pkl")   
 
     pd.concat([X_train, pd.DataFrame(y_train)], axis=1).to_csv('data/train.csv', index=False)
     pd.concat([X_test, pd.DataFrame(y_test)], axis=1).to_csv('data/test.csv', index=False)

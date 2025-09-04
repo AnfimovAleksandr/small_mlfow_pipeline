@@ -1,6 +1,7 @@
 import pandas as pd
 import mlflow
 import mlflow.sklearn
+from mlflow.tracking import MlflowClient
 import pickle
 import json
 from time import time
@@ -40,10 +41,14 @@ def main():
     X_test = test_data.drop(['final_status'], axis=1)
     y_test = test_data['final_status']
 
+    mlflow.set_tracking_uri('http://localhost:5000')
     mlflow.set_experiment('kaggle_projects')
 
     with mlflow.start_run(run_name="LGBM_optimal"):
         # ---------------------------- LightGBM ----------------------------
+
+        mlflow.set_tag("model_type", "lightgbm")
+        mlflow.set_tag("model_framework", "lightgbm")
 
         # Параметры
         best_params = {
@@ -101,8 +106,26 @@ def main():
             input_example=input_example
         )
 
-        with open('models/lgbm_model.pkl', 'wb') as f:
-            pickle.dump(lgbm_model, f)
+        model_uri = f"runs:/{mlflow.active_run().info.run_id}/lgbm_model"
+        registered_model = mlflow.register_model(model_uri, "KickstarterModel")
+
+        # Сохраняем предобработчик как артефакт, чтобы на предсказании данные обрабатывались аналогично
+        preprocessor_path = "models/preprocessor.pkl"
+        mlflow.log_artifact(preprocessor_path, artifact_path="preprocessor")
+
+        client = MlflowClient()
+        client.set_model_version_tag(
+            name="KickstarterModel",
+            version=registered_model.version,
+            key='f1_score',
+            value=str(round(results['f1_test'], 5))
+        )
+        client.set_model_version_tag(
+            name="KickstarterModel",
+            version=registered_model.version,
+            key='preprocessor_path',
+            value=f"runs:/{mlflow.active_run().info.run_id}/preprocessor/preprocessor.pkl"
+        )
 
         print("Pipeline для бустинга LightGBM завершён")
         

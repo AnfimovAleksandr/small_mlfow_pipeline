@@ -1,2 +1,6 @@
 *.venv
 *.csv
+mlflow_data/
+__pycache__/
+*.pyc
+testing.py
