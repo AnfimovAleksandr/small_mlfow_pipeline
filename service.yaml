@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kickstarter-prediction-app
+  labels:
+    app: kickstarter-prediction-app
+spec:
+  selector:
+    app: kickstarter-prediction-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+      name: http
+  type: LoadBalancer

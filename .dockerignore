@@ -1,0 +1,4 @@
+.venv
+.dvc
+data/
+dvc_storage/

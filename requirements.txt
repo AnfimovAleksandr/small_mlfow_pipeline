@@ -1,10 +1,9 @@
 dvc
-mlflow==3.1.1
+mlflow==3.3.2
 pandas
 numpy
 scikit-learn
 lightgbm
 apache-airflow==2.11.0
 country_converter
-Flask==2.3.3
 joblib==1.3.2

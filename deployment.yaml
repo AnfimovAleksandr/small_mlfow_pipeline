@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kickstarter-prediction-app
+  labels:
+    app: kickstarter-prediction-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kickstarter-prediction-app
+  template:
+    metadata:
+      labels:
+        app: kickstarter-prediction-app
+    spec:
+      containers:
+      - name: kickstarter-prediction-app
+        image: greytune/kickstarter-prediction:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "1024Mi"
+            cpu: "200m"
