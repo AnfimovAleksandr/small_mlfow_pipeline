@@ -6,7 +6,7 @@ from data_preprocessor_class import KickstarterPreprocessor
 # Здесь будет ссылка на оригинальный гитхаб с полным проектом
 
 def main():
-    data_train = pd.read_csv('data/raw_train.csv')
+    data_train = pd.read_csv('data/raw/raw_train.csv')
 
     #------------------------------------- Первичная предобработка (без скелеров) -------------------------------------------
 
@@ -31,7 +31,7 @@ def main():
     # Сохраняем предобработчик
     preprocessor.save("models/preprocessor.pkl")   
 
-    pd.concat([X_train, pd.DataFrame(y_train)], axis=1).to_csv('data/train.csv', index=False)
-    pd.concat([X_test, pd.DataFrame(y_test)], axis=1).to_csv('data/test.csv', index=False)
+    pd.concat([X_train, pd.DataFrame(y_train)], axis=1).to_csv('data/processed/train.csv', index=False)
+    pd.concat([X_test, pd.DataFrame(y_test)], axis=1).to_csv('data/processed/test.csv', index=False)
 
 main()

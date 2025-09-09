@@ -1,6 +1,8 @@
 from airflow.decorators import dag, task
 from datetime import datetime, timedelta
 
+## DISCLAIMER: в этой версии пока что не работает
+
 
 deafult_args = {
     'owner': 'anfimov_aleksandr',

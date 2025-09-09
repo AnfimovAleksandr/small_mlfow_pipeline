@@ -32,12 +32,12 @@ def process_result(model, X_train, X_test, y_train, y_test):
 
 def main():
     # Подгружаем train
-    train_data = pd.read_csv('data/train.csv')
+    train_data = pd.read_csv('data/processed/train.csv')
     X_train = train_data.drop(['final_status'], axis=1)
     y_train = train_data['final_status']
 
     # Подгружаем test
-    test_data = pd.read_csv('data/test.csv')
+    test_data = pd.read_csv('data/processed/test.csv')
     X_test = test_data.drop(['final_status'], axis=1)
     y_test = test_data['final_status']
 
@@ -110,9 +110,12 @@ def main():
         registered_model = mlflow.register_model(model_uri, "KickstarterModel")
 
         # Сохраняем предобработчик как артефакт, чтобы на предсказании данные обрабатывались аналогично
+        print('Сохраняем предобработчик')
         preprocessor_path = "models/preprocessor.pkl"
         mlflow.log_artifact(preprocessor_path, artifact_path="preprocessor")
 
+        print('Проставляем теги')
+        
         client = MlflowClient()
         client.set_model_version_tag(
             name="KickstarterModel",
@@ -126,6 +129,9 @@ def main():
             key='preprocessor_path',
             value=f"runs:/{mlflow.active_run().info.run_id}/preprocessor/preprocessor.pkl"
         )
+
+        with open('models/lgbm_model.pkl', 'wb') as f:
+            pickle.dump(lgbm_model, f)
 
         print("Pipeline для бустинга LightGBM завершён")
         

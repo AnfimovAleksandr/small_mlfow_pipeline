@@ -3,82 +3,82 @@ stages:
   data_load:
     cmd: python scripts/data_loader.py
     deps:
-    - path: data/raw_train.csv
+    - path: data/raw/raw_train.csv
       hash: md5
       md5: 3710f58494ce32f43e65755cc3f846b3
       size: 36791207
       isexec: true
     - path: scripts/data_loader.py
       hash: md5
-      md5: a9b4f65a62f2ff47aa08b77b54c0e53b
-      size: 1675
+      md5: 0c65a6029cec41ca7c11e859adf213a7
+      size: 1557
       isexec: true
     - path: scripts/data_preprocessor_class.py
       hash: md5
-      md5: fe5412238c02e5511105ff78b6f4dae8
-      size: 7632
+      md5: a0b2252530c106ec5253ec6e2cc44b65
+      size: 9732
       isexec: true
     outs:
-    - path: data/test.csv
+    - path: data/processed/test.csv
       hash: md5
-      md5: b3f16512c9a3012278967d3cc656fc1b
-      size: 6377119
+      md5: c7b5cb45fdadd768a3c8f4d6da140e52
+      size: 6460282
       isexec: true
-    - path: data/train.csv
+    - path: data/processed/train.csv
       hash: md5
-      md5: 96aa3278e2aa3e6ada4461aa5b35eeba
-      size: 25507258
+      md5: 4e051fb7efac3b546c6b214b5a51b702
+      size: 25839373
       isexec: true
     - path: models/preprocessor.pkl
       hash: md5
-      md5: 16b63e06874075c194ba8400bc103499
-      size: 3147
+      md5: 009492f9113887b2319d51db4b78009f
+      size: 3435
       isexec: true
   train_logreg:
     cmd: python scripts/train_logreg_model.py
     deps:
-    - path: data/test.csv
+    - path: data/processed/test.csv
       hash: md5
-      md5: b3f16512c9a3012278967d3cc656fc1b
-      size: 6377119
+      md5: c7b5cb45fdadd768a3c8f4d6da140e52
+      size: 6460282
       isexec: true
-    - path: data/train.csv
+    - path: data/processed/train.csv
       hash: md5
-      md5: 96aa3278e2aa3e6ada4461aa5b35eeba
-      size: 25507258
+      md5: 4e051fb7efac3b546c6b214b5a51b702
+      size: 25839373
       isexec: true
     - path: scripts/train_logreg_model.py
       hash: md5
-      md5: fe1fd392d4c87556b2f1802a87ca5d9b
-      size: 4042
+      md5: 7bd7534bd3418126de351436e83aca62
+      size: 5365
       isexec: true
     outs:
     - path: models/logreg_model.pkl
       hash: md5
-      md5: 3e5c196f2d4da1495fb5e2a65bcddd7a
+      md5: 17047862d105f7c64876641c30474313
       size: 1714
       isexec: true
   train_lgmb_model:
     cmd: python scripts/train_lgbm_model.py
     deps:
-    - path: data/test.csv
+    - path: data/processed/test.csv
       hash: md5
-      md5: b3f16512c9a3012278967d3cc656fc1b
-      size: 6377119
+      md5: c7b5cb45fdadd768a3c8f4d6da140e52
+      size: 6460282
       isexec: true
-    - path: data/train.csv
+    - path: data/processed/train.csv
       hash: md5
-      md5: 96aa3278e2aa3e6ada4461aa5b35eeba
-      size: 25507258
+      md5: 4e051fb7efac3b546c6b214b5a51b702
+      size: 25839373
       isexec: true
     - path: scripts/train_lgbm_model.py
       hash: md5
-      md5: cba80ebdee5bad8945d6b180ea3d90ff
-      size: 3863
+      md5: 39ce6b941189c8d09bb1dc29816a191d
+      size: 5181
       isexec: true
     outs:
     - path: models/lgbm_model.pkl
       hash: md5
-      md5: 1d330348e65fd172adbb8e135bc64f00
-      size: 464218
+      md5: 27c0f740daaeab064f381a5f1865d762
+      size: 461884
       isexec: true
