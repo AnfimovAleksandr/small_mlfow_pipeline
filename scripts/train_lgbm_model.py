@@ -109,6 +109,12 @@ def main():
         model_uri = f"runs:/{mlflow.active_run().info.run_id}/lgbm_model"
         registered_model = mlflow.register_model(model_uri, "KickstarterModel")
 
+        with open('models/lgbm_model.pkl', 'wb') as f:
+            pickle.dump(lgbm_model, f)
+
+        model_path = "models/lgbm_model.pkl"
+        mlflow.log_artifact(model_path, artifact_path="model")
+
         # Сохраняем предобработчик как артефакт, чтобы на предсказании данные обрабатывались аналогично
         print('Сохраняем предобработчик')
         preprocessor_path = "models/preprocessor.pkl"
@@ -129,9 +135,14 @@ def main():
             key='preprocessor_path',
             value=f"runs:/{mlflow.active_run().info.run_id}/preprocessor/preprocessor.pkl"
         )
+        client.set_model_version_tag(
+            name="KickstarterModel",
+            version=registered_model.version,
+            key='model_path',
+            value=f"runs:/{mlflow.active_run().info.run_id}/model/lgbm_model.pkl"
+        )
 
-        with open('models/lgbm_model.pkl', 'wb') as f:
-            pickle.dump(lgbm_model, f)
+        
 
         print("Pipeline для бустинга LightGBM завершён")
         

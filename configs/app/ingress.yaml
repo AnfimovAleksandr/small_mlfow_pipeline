@@ -1,18 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: kickstarter-prediction-app
+  name: kickstarter-app
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: kickstarter-prediction.local
+    - host: kickstarter-app.local
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: kickstarter-prediction-app
+                name: kickstarter-app-service  
                 port:
-                  number: 80
+                  number: 8000 

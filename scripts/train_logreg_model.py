@@ -11,8 +11,6 @@ from sklearn.metrics import (accuracy_score, f1_score, average_precision_score)
 
 from sklearn.linear_model import LogisticRegression
 
-import lightgbm as lgb
-
 # Здесь будет ссылка на оригинальный гитхаб с полным проектом
 
 def process_result(model, X_train, X_test, y_train, y_test):
@@ -104,13 +102,19 @@ def main():
 
         mlflow.sklearn.log_model(
             sk_model=logreg_model,
-            name="logreg_model",
+            name = "logreg_model",
             signature=signature,
             input_example=input_example
         )
 
         model_uri = f"runs:/{mlflow.active_run().info.run_id}/logreg_model"
         registered_model = mlflow.register_model(model_uri, "KickstarterModel")
+
+        with open('models/logreg_model.pkl', 'wb') as f:
+            pickle.dump(logreg_model, f)
+
+        model_path = "models/logreg_model.pkl"
+        mlflow.log_artifact(model_path, artifact_path="model")
 
         print('Сохраняем предобработчик')
 
@@ -133,9 +137,12 @@ def main():
             key='preprocessor_path',
             value=f"runs:/{mlflow.active_run().info.run_id}/preprocessor/preprocessor.pkl"
         )
-
-        with open('models/logreg_model.pkl', 'wb') as f:
-            pickle.dump(logreg_model, f)
+        client.set_model_version_tag(
+            name="KickstarterModel",
+            version=registered_model.version,
+            key='model_path',
+            value=f"runs:/{mlflow.active_run().info.run_id}/model/logreg_model.pkl"
+        )
 
         print("Pipeline для логистической регрессии завершён")
         

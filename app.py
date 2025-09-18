@@ -22,8 +22,8 @@ preprocessor = None
 model_framework = None
 model_loaded = False
 
-# Загружаем компоненты при старте
-mlflow.set_tracking_uri('http://localhost:5000')
+# # Загружаем компоненты при старте
+# mlflow.set_tracking_uri('http://localhost:5000')
 
 def load_production_model():
     """Загружает Production модель и связанный с ней предобработчик"""
@@ -31,66 +31,73 @@ def load_production_model():
     
     try:
         # Устанавливаем tracking URI
-        mlflow_uri = os.getenv('MLFLOW_TRACKING_URI', 'http://localhost:5000')
+        mlflow_uri = os.getenv('MLFLOW_TRACKING_URI', 'http://mlflow-service:5000')
+        # mlflow_uri = 'http://localhost:5000'
         mlflow.set_tracking_uri(mlflow_uri)
         print(mlflow_uri)
         print(os.getcwd())
 
-        # client = MlflowClient()
+        client = MlflowClient()
         
-        # # Ищем Production версию модели
-        # prod_versions = client.get_latest_versions("KickstarterModel", stages=["Production"])
+        print(1)
+        # Ищем Production версию модели
+        prod_versions = client.get_latest_versions("KickstarterModel", stages=["Production"])
+        print(1)
+        if not prod_versions:
+            print("Нет модели в статусе Production")
+            model_loaded = False
+            return False
         
-        # if not prod_versions:
-        #     print("Нет модели в статусе Production")
-        #     model_loaded = False
-        #     return False
+        prod_version = prod_versions[0]
+        print(f"Найдена Production версия: {prod_version.version}")
+        print(prod_version)
         
-        # prod_version = prod_versions[0]
-        # print(f"Найдена Production версия: {prod_version.version}")
-        
-        # # Получаем инфу о фреймворке логгирования для корректной загрузки
-        # run_id = prod_version.run_id
-        # run_data = client.get_run(run_id)
-        # model_type = run_data.data.tags.get("model_type", "unknown")
-        # model_framework = run_data.data.tags.get("model_framework", "unknown")
-        # print(f"Информация о модели: тип={model_type}, фреймворк={model_framework}")
+        # Получаем инфу о фреймворке логгирования для корректной загрузки
+        run_id = prod_version.run_id
+        run_data = client.get_run(run_id)
+        model_type = run_data.data.tags.get("model_type", "unknown")
+        model_framework = run_data.data.tags.get("model_framework", "unknown")
+        print(f"Информация о модели: тип={model_type}, фреймворк={model_framework}")
 
-        # # Загружаем саму модель
+        # Загружаем саму модель
+        
+        model_source = prod_version.source
+        print(model_source)
 
-        # with tempfile.TemporaryDirectory() as tmp_dir:
-        #     model_local_path = mlflow.artifacts.download_artifacts(
-        #             run_id=run_id,
-        #             artifact_path="logreg_model",
-        #             dst_path=tmp_dir
-        #         )
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            model_local_path = mlflow.artifacts.download_artifacts(
+                    artifact_uri=prod_version.tags.get('model_path'),
+                    dst_path=tmp_dir
+                )
             
-        #     if model_framework == "sklearn":
-        #         model = mlflow.sklearn.load_model(model_local_path)
-        #     elif model_framework == "lightgbm":   
-        #         model = mlflow.lightgbm.load_model(model_local_path)
-        #     else:
-        #         print("Ошибка: Неизвестный тип модели")
-        #         model_loaded = False
-        #         return False
-        model_framework = "sklearn"
-        model = joblib.load('/app/models/logreg_model.pkl')
+            # if model_framework == "sklearn":
+            #     model = mlflow.sklearn.load_model(model_local_path)
+            # elif model_framework == "lightgbm":   
+            #     model = mlflow.lightgbm.load_model(model_local_path)
+            # else:
+            #     print("Ошибка: Неизвестный тип модели")
+            #     model_loaded = False
+            #     return False
+
+            model = joblib.load(model_local_path)
+        # model_framework = "sklearn"
+        # model = joblib.load('/app/models/logreg_model.pkl')
         print('Модель загружена')
         
         
-        # # Создаем временный каталог для загрузки артефакта
-        # with tempfile.TemporaryDirectory() as tmp_dir:
-        #     preprocessor_local_path = mlflow.artifacts.download_artifacts(
-        #             run_id=run_id,
-        #             artifact_path="preprocessor/preprocessor.pkl",
-        #             dst_path=tmp_dir
-        #         )
-        #     print(f"Предобработчик загружен в: {preprocessor_local_path}")
+        # Создаем временный каталог для загрузки артефакта
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            print(run_id)
+            preprocessor_local_path = mlflow.artifacts.download_artifacts(
+                    artifact_uri=prod_version.tags.get('preprocessor_path'),
+                    dst_path=tmp_dir
+                )
+            print(f"Предобработчик загружен в: {preprocessor_local_path}")
             
-        #     # Загружаем предобработчик
-        #     preprocessor = joblib.load(preprocessor_local_path)
+            # Загружаем предобработчик
+            preprocessor = joblib.load(preprocessor_local_path)
 
-        preprocessor = joblib.load('/app/models/preprocessor.pkl')
+        # preprocessor = joblib.load('/app/models/preprocessor.pkl')
 
         model_loaded = True
         print("Модель и предобработчик успешно загружены")

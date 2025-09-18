@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kickstarter-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kickstarter-app
+  template:
+    metadata:
+      labels:
+        app: kickstarter-app
+    spec:
+      containers:
+      - name: app
+        image: greytune/kickstarter-app:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "100m"
+          limits:
+            memory: "1024Mi"
+            cpu: "200m"
+        env:
+        - name: MLFLOW_TRACKING_URI
+          value: "http://mlflow-service:5000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kickstarter-app-service
+spec:
+  selector:
+    app: kickstarter-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: LoadBalancer
