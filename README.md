@@ -25,8 +25,8 @@
 1) (Нужен установленный Docker) Собираем образ `docker build -f Dockerfile -t kickstarter-prediction-app:latest .`
 2) Пушим образ в dockerhub или загружаем в minikube с помощью load, но будет дольше.
 3) (Нужен установленный Docker) Запускаем minikube `minikube start --memory=4096 --cpus=2`
-4) Деплоим приложение (предварительно нужно заменить название образа в зависимости от сбособа на 2 шаге) `kubectl apply -f deployment.yaml` и `kubectl apply -f service.yaml`. Ждём минут 5 пока запуститься.
-5) Загружаем ingress `minikube addons enable ingress` и применяем конфиг `kubectl apply -f ingress.yaml`. Открываем адрес `minikube tunnel`.
+4) Деплоим приложение (предварительно нужно заменить название образа в зависимости от сбособа на 2 шаге) `kubectl apply -f configs/deployment.yaml` и `kubectl apply -f configs/service.yaml`. Ждём минут 5 пока запуститься.
+5) Загружаем ingress `minikube addons enable ingress` и применяем конфиг `kubectl apply -f configs/ingress.yaml`. Открываем адрес `minikube tunnel`.
 
 ## Команды для воспроизведения экспериментов
 1) Через DVC: `dvc repro --force`
